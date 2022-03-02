@@ -13,8 +13,8 @@ plot_sidebar <- sidebarPanel(
   selectInput(
     inputId = "user_category",
     label = "Select country",
-    choices = climate_change_data$country,
-    selected = "United States",
+    choices = top_climate$country,
+    selected = "Suriname",
     multiple = TRUE)
 )
 

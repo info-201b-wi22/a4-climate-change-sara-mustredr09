@@ -10,13 +10,21 @@ server <- function(input, output) {
   
   output$climatePlot <- renderPlotly({
     
-    climate_change_data <- climate_change_data %>%  filter(country %in% input$user_category)
+#Choose carbon neutral countries.
+    
+cop2050_countries <- c("Suriname","Bhutan", "Austria","Iceland","Germany")
+
+top_climate <-climate_change_data %>% 
+  filter(country%in%cop2050_countries)
+    
+top_climate <- top_climate %>% filter(country %in% input$user_category)
     
     # Make a scatter plot
-    climate_change_plot <- ggplot(data = climate_change_data) +
-      geom_col(mapping = aes(x = year, 
+    climate_change_plot <- ggplot(data = top_climate) +
+      geom_line(mapping = aes(x = year, 
                               y = oil_co2_per_capita, 
                               color= country))
+    
     # Make interactive plot
     my_plotly_plot <- ggplotly(climate_change_plot) 
     
