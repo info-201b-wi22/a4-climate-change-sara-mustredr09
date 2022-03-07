@@ -14,22 +14,24 @@ server <- function(input, output) {
   
   output$climate_change_plot <- renderPlotly({
     
-cop2050_countries <- c("Suriname","Bhutan","Austria","Iceland","Germany")
+    cop2050_countries <- c("Suriname","Bhutan","Austria","Iceland","Germany","Uruguay", "Finland","Sweden")
     
-top_climate <-climate_change_data %>% 
-  filter(country%in%cop2050_countries) %>%
-  filter(country%in%input$user_category)
-      
-# You can access the values of the second widget with input$slider2, e.g.
-#More slider stuff.
-
-# Make a scatter plot
-  climate_change_plot <- ggplot(data = top_climate) +
-    geom_line(mapping = aes(x = year, 
-                           y = get(input$user_category2), 
-                           color= country))+
-  labs(title = "CO2 Emissions", x = "Year", y = "Emissions per capita, per source")
-  
+    top_climate <-climate_change_data %>% 
+      filter(country%in%cop2050_countries) 
+    
+    top_climate <-top_climate%>%
+      filter(country%in%input$user_category)
+    
+    # You can access the values of the second widget with input$slider2, e.g.
+    #More slider stuff.
+    
+    # Make a scatter plot
+    climate_change_plot <- ggplot(data = top_climate) +
+      geom_line(mapping = aes(x = year, 
+                              y = get(input$user_category2), 
+                              color= country))+
+      labs(title = "CO2 Emissions per capita", x = "Year", y = "Emissions per capita, per source")
+    
     
     # Make interactive plot
     my_plotly_plot <- ggplotly(climate_change_plot) 
@@ -39,4 +41,4 @@ top_climate <-climate_change_data %>%
 }
 
 
-  
+
